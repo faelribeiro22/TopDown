@@ -14,6 +14,9 @@ public class Player : MonoBehaviour {
     public float thrustPower;
     public bool canMove;
     public bool canAttack;
+    public bool iniFrames;
+    SpriteRenderer sr;
+    float iniTimer = 1f;
 
 	// Use this for initialization
 	void Start () {
@@ -22,7 +25,8 @@ public class Player : MonoBehaviour {
         getHealth();
         canMove = true;
         canAttack = true;
-
+        iniFrames = false;
+        sr = GetComponent<SpriteRenderer>();
     }
 	
     void getHealth()
@@ -48,6 +52,25 @@ public class Player : MonoBehaviour {
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
+        }
+        if (iniFrames)
+        {
+            iniTimer -= Time.deltaTime;
+            int rn = Random.Range(0, 100);
+            if (rn < 50)
+            {
+                sr.enabled = false;
+            }
+            if (rn > 50)
+            {
+                sr.enabled = true;
+            }
+            if (iniTimer <= 0)
+            {
+                iniTimer = 1f;
+                iniFrames = false;
+                sr.enabled = true;
+            }
         }
     }
 

@@ -61,8 +61,13 @@ public class Crab : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
+            Player player = collision.gameObject.GetComponent<Player>();
             health--;
-            collision.gameObject.GetComponent<Player>().currentHealth--;
+            if (!player.iniFrames)
+            {
+                player.currentHealth--;
+                player.iniFrames = true;
+            }
 
             if (health <= 0)
             {
